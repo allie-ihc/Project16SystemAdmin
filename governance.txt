@@ -4,13 +4,13 @@ Governance Framework
 |---|---|---|---|---|
 | 1 | Model registry: versioning, lineage, aliases | A. Moldenhauer | MLflow / Unity Catalog registry | every promotion |
 | 2 | Model + data documentation | A. Moldenhauer | model card + datasheet | before staging |
-| 3 | AIBOM (ingredients label for each system) | A. Moldenhauer | CycloneDX ML-BOM / SPDX 3.0 | per release |
-| 4 | Retention satisfying EU AI Act Art. 12 logging | A. Moldenhauer | WORM/object-lock + signed artifacts | continuous |
+| 3 | AIBOM (ingredients label for each system) | J. Smith | CycloneDX ML-BOM / SPDX 3.0 | per release |
+| 4 | Retention satisfying EU AI Act Art. 12 logging | H. Smith | WORM/object-lock + signed artifacts | continuous |
 | 5 | Autonomy ladder + approval gates | A. Moldenhauer | autonomy-ladder.yaml | per action class |
-| 6 | LLM security program | A. Moldenhauer | OWASP LLM Top 10 + MITRE ATLAS map | quarterly red team |
-| 7 | Human oversight (EU AI Act Art. 14) | A. Moldenhauer | named accountable owner per system | per high-risk system |
+| 6 | LLM security program | H. Smith | OWASP LLM Top 10 + MITRE ATLAS map | quarterly red team |
+| 7 | Human oversight (EU AI Act Art. 14) | J. Smith | named accountable owner per system | per high-risk system |
 | 8 | Consumption cost guardrails | A. Moldenhauer | spend caps (AAU/AAC/PTU/GSU/token) | per budget period |
-| 9 | Risk classification (RMF Map) | A. Moldenhauer | risk register entry | per system, 90-day review |
-| 10 | Incident + drift response | A. Moldenhauer | runbook + on-call rotation | tested twice/year |
+| 9 | Risk classification (RMF Map) | J. Smith | risk register entry | per system, 90-day review |
+| 10 | Incident + drift response | H. Smith | runbook + on-call rotation | tested twice/year |
 
 > As of 14 August 2026, digital Omnibus of the EU AI Act is still deferred
