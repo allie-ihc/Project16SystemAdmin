@@ -1,0 +1,78 @@
+# autonomy-ladder.yaml — the governed-autonomy policy for the 2030 org.
+# Maps each ops action class to a tier, the gate that must clear before it runs,
+# and the audit + rollback requirements. This file IS the architecture decision:
+# it says, in writing, what an agent may do alone and what a human must own.
+#
+# Tiers (rising autonomy): observe -> recommend -> approve -> act
+#   observe   = read-only telemetry; never changes state
+#   recommend = posts a hypothesis/fix to chat; a human applies it
+#   approve   = agent prepares the change, a named human clicks approve, agent applies
+#   act       = agent applies inside policy guardrails, logs, and can self-rollback
+
+version: 1
+owner: platform-engineering@example.org          # a human, accountable per EU AI Act Art. 14
+review_cadence_days: 90
+
+defaults:
+  audit_log: required          # every action appended to a WORM audit trail
+  model_id_pinned: true        # pin the model ID, never "latest"
+  spend_cap_usd_per_day: 200   # consumption guardrail (AAU/AAC/PTU/GSU spend cap)
+
+actions:
+  - name: restart_stateless_pod
+    tier: act
+    guardrails:
+      max_blast_radius: 1_pod
+      rollback: automatic
+    rationale: "Idempotent, reversible, low blast radius. Safe to automate."
+
+  - name: clear_server_cache
+    tier: act
+    guardrails:
+      confine_to: rebuildable_data
+    rationale: "Only able to delete data that can be rebuilt"
+
+  - name: read_server_logs
+    tier: observe
+    guardrails: 
+      read_only: true
+    rationale: "read-only action, no potential for harm because the agent cannot make changes"
+
+  - name: scale_deployment
+    tier: approve
+    guardrails:
+      max_replicas_delta: 4
+      cost_review: required
+    rationale: "Reversible but costs money and shifts capacity. A human signs the spend."
+
+  - name: rotate_credential
+    tier: approve
+    guardrails:
+      out_of_band_verification: required
+    rationale: "Security-sensitive; an injected agent must not rotate keys alone."
+
+  - name: restart_server
+    tier: approve
+    guardrails:
+      human_in_the_loop: mandatory  
+    rationale: "Human should review necessity, potential outtage times"
+
+  - name: delete_persistent_volume
+    tier: recommend          # NEVER 'act' — irreversible data loss
+    guardrails:
+      irreversible: true
+      human_in_the_loop: mandatory
+    rationale: "Irreversible. The human owns the decision and the accountability."
+
+  - name: modify_firewall_rule
+    tier: recommend
+    guardrails:
+      lethal_trifecta_check: required   # untrusted input + sensitive access + state change
+    rationale: "Changes the trust boundary. Rule of Two: never all three unsupervised."
+  
+  - name: edit_serving_model_budget
+    tier: recommend
+    guardrails: 
+      human_in_the_loop: mandatory
+      cost_review: required
+    rationale: "Human must ensure budget change is necessary and approve it"

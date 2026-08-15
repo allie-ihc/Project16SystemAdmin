@@ -1,0 +1,16 @@
+Observe Actions: 
+	- Read server logs - read-only state, no potential harms
+
+Recommend Actions: 
+	- Delete persistent volume - human oversight required to ensure potential valuable data is not deleted
+	- Modify Firewall Rule - human oversight necessary to ensure lethal trifecta is not created by editing permissions
+	- Edit model budgets - human oversight to ensure that increase or decrease in budget is necessary, will not cause unintended issues or monetary loss
+
+Approve Actions: 
+	- Scale Deployment - human overlook but agent can deploy
+	- Rotate credential - human should verify credentials are accurate and not leaked by agent before action is taken
+	- Restart server - human should verify action is necessary and account for possible downtime
+
+Act Actions: 
+	- Restart stateless pod - agent will not affect irreversible data or a great deal of systems
+	- Clear server cache - data deleted is reversible

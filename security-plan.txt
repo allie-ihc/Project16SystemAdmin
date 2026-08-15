@@ -1,0 +1,49 @@
+Security Plan:
+
+- Identity: 
+	- MFA authentication methods for all accounts. MFA authentication will be done through FIDO2 keys to ensure the highest level of security. 
+
+- Least Privilege:
+	- Review and roll back privileges no longer needed by users every 90 days in order to prevent privilege creep
+	- All AI agents will be kept in read-only mode or only allowed to perform actions outside of 'act' scope with specific human permission
+
+- Segmentation:
+	- All sensitive info is kept within system - agents that work with sensitive information kept on-site
+	- Sensitive databases and datasets are only accessed by agents behind firewalls, sensitive info only sent out after account approval
+
+- Out-of-band wire-verification:
+	- Any wire transfer or other monetary transfers must have dual-approval before being processed for authentication - video or audio is not an 
+	  appropriate way to verify correct identity
+
+- OWASP LLM Threat Map:
+
+	- Prompt Injection - potential for RAG assistants to receive indirect prompt injection that causes unwanted behaviors
+	- Prevention - keep RAG assistants in read-only state, cut off connection to untrusted or outside servers
+	
+	- Sensitive Information Disclosure - RAG assistants have access to sensitive info that could be leaked
+	- Prevention - keep RAG assistant dealing with sensitive information on-site, not accessible from untrusted sources
+
+	- Supply Chain - possibility for base models pulled to be poisoned
+	- Prevention - monitor and regularly evaluate model output to check for possible poisoning, review model sources regularly
+
+	- Data and Model Poisoning - training or other model data poisoned with unwanted information
+	- Prevention - keep model data and datasets in a secure location, regularly monitor changes and updates to data
+
+	- Improper Output Handling - not reviewing model outputs
+	- Prevention - review any code or prompts written by agents before running, human held responsible before any agent-produced product is used
+
+	- Excessive Agency - too much permission granted to an agent that could do harm
+	- Prevention - Keep all agents in read-only mode or require human approval for any potentially harmful action an agent may perform
+
+	- System Prompt Leakage - Hidden model instructions are extracted
+	- Prevention - Put guardrails in place to stop model information from being leaked, keep sensitive information from being exchanged over serving 	  models
+	
+	- Vector and Embedding Weaknesses - RAG assistants or embeddings poisoned or leaked
+	- Prevention - Store sensitive model info securely in the system, regularly check against backups in order to ensure poisoning has not occurred
+	
+	- Misinformation - RAG assistant or other model outputs incorrect information
+	- Prevention - Use evaluation datasets to monitor model output over time, log hallucination rates over time and roll back model versions with high
+	  hallucination rates or inaccuracies
+
+	- Unbounded Consumption - Models eat cost with high token use
+	- Prevention - Set token and cost budgets for every serving model, monitor model costs over time for potential spikes

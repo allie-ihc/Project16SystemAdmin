@@ -1,0 +1,28 @@
+What AI will be used for: 
+	- Monitoring logs and network data in order and creating alerts for possible malicious behavior
+	- Small RAG assistant for summarizing and answering questions about ministry policies
+	- RAG assistant to summarize and pull up records for people associated with the ministry to aid in communications and finding necessary personal inf among multiple databases
+	- Copilot assistant for creating  new programs for the ministry
+
+
+What workloads the agents will run: 
+	- Monitoring: MCP, read-only alerts, propose possible solutions but do not run anything without approval
+	- Policy RAG assistant: Run over database of policies, pull summaries from policies based on prompts
+	- Info RAG assistant: Keep database of contact and personal information and pull from when requested
+	- Copilot: Create and assist with programming and lines of code when prompted
+
+Model-Tier Choices: 
+	- Monitoring: Microsoft Security Copilot
+		- Provides a number of benefits considering the ministry has a relatively small IT team, should be able to provide useful information for IT 		team to use in order to detect and resolve security issues
+	- Policy RAG: gpt 5.4
+		- Cheaper to run in order to save on costs, but should still be powerful enough to sift through info and produce results with high enough a		accuracy
+	- Info RAG: gpt 5.4
+		- Cheaper to run, should still be able to accurately pull necessary info
+	- Copilot: Claude Code
+		- Reliable, able to greatly assist with necessary tasks
+
+Build-vs-Buy-vs-Self-Host:
+	- Monitoring - self-host - has access to logs and other data that could be potentially sensitive, so it is better for the agent to review and act 	  on files contained within the system to prevent possible security issues
+	- Policy Rag: build - build up from base model over policy documents on site, needs to be personalized to documents so should be built by the 		  ministry
+	- Info RAG: self-host - has access to sensitive information and personal records, so model should be completely contained on-site
+	- Copilot: buy - not necessarily needed to be personalized and does not have access to sensitive datasets, so can be bought and used for the 		  ministry

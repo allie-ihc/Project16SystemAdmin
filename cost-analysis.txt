@@ -1,0 +1,13 @@
+Cost Analysis
+
+Size of AI Estate:
+
+	- Two RAG Assistants on-site: Assuming ~13B model size at FP8 and 3M vectors at FP16, 13GB*2 + 13GB*2 + overhead = ~30GB = ~82GB of VRAM
+
+Self-Host vs. API:
+
+	- RAG assistants should be called by API - cheaper alternative, compare price of API at 2500/month while self-host is about 22,000/month for chosen 	  models, so API is cheaper option. 
+
+Consumption Spend Caps:
+	
+	- RAG models kept to caps of 3000/month, reasonable budget with some wiggle room but keeps assistants from going an excessive amount above budget
